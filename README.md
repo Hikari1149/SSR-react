@@ -1,136 +1,75 @@
-# Node.js仿知乎服务端
-
-## REST
-
- **Representational State Transfer** \(**REST**\) is a [software architectural](https://en.wikipedia.org/wiki/Software_architecture) style that defines a set of constraints to be used for creating [Web services](https://en.wikipedia.org/wiki/Web_service)
-
-**Re**presentational **S**tate **T**ransfer
-
-Representational: 数据的表示形式 \(json,xml等\)
-
-State:当前状态或数据
-
-Transfer:数据传输
-
-### REST的六个限制
-
-1. Client-Server 
-2. Stateless 用户会话信息保存在客户端
-3. Cacheability 
-4. **Uniform Interface**
-5. Layered System
-6. Code on Demand （Optional）
-
-### 路由中间件
-
-* 处理不同的url
-* 处理不同的http方法
-* 解析url上的参数
-* koa:prefix,多中间件
-
-### 控制器中间件
-
-* 处理HTTP请求参数
-* 处理业务逻辑
-* 发送HTTP响应
-
-### HTTP OPTION的作用
-
-* 检测服务器支持的请求方法 \(对应返回头的ALLOW子段\)
-* CORS的预检请求
-
-### 数据库**m**ongoDB
-
-> **MongoDB is a general purpose, document-based, distributed database built for modern application developers and for the cloud era. No database is more productive to use.**
-
-* 使用云数据库MongoDB-Atlas
-* Mongoose连接MongoDB 
-* 创建对应模型的Schema 
-
-Schema主要用于定义MongoDB中集合Collection里文档document的结构,可以理解为mongoose对表结构的定义\(不仅仅可以定义文档的结构和属性，还可以定义文档的实例方法、静态模型方法、复合索引等\)，每个schema会映射到mongodb中的一个collection，schema不具备操作数据库的能力
+# SSR-react
 
 
 
-### JWT 在Koa框架中实现用户的认证与授权
+### 客户端渲染
 
-![Session&#x8BA4;&#x8BC1;](.gitbook/assets/p-o7grtmiw3m-yfy38-11px.png)
+![CSR](.gitbook/assets/ogyls-7f1-ukc1ousdkbusdngj8.png)
 
-#### Session 优势
+### 服务端渲染
 
-* 结合cookie使用,退出登入时,可以让前端清除掉cookie 或者 服务端清除对应的session
-* session存在服务端,相对安全
+![SSR](.gitbook/assets/gessp4bwne0o0rnhmo0-0.png)
 
-#### Session 劣势
+### CSR和SSR优劣
 
-* cookie + session 跨域时需处理
-* 分布式部署时 需要多机共享session
+* **CSR :** 
+* React代码在浏览器中运行 消耗的是用户浏览器的性能
+* **SSR :**
+*  React代码在服务器端运行,消耗的是服务器的性能
+* 只发生在第一次进入页面的时候
 
-#### JWT简介
+### 在服务器端编写React组件
 
-JSON Web Tokens are an open, industry standard [RFC 7519](https://tools.ietf.org/html/rfc7519) method for representing claims securely between two parties.
+* Common Js规范 引入React
+* 配置webpack 遇到.js文件 使用babel进行编译
+* 安装babel-loader @babel/core 和对应的preset包 \(注意babel 7.0版本兼容性的问题\)
 
-JWT由Header,Payload,Signature三部分构成
+### **Babel**
 
-![JWT&#x8BA4;&#x8BC1;](.gitbook/assets/usd-h6exql7m5-s1fx9y2.png)
+**babel可以将当前运行平台\(浏览器、node服务器\)尚不支持的下一代或几代js语法编译为当前支持的js语法版本，比如可以把es6 es7和es8的js代码编译为es5的代码**
 
-登入时 服务端将post的信息加密后生成token返回给客户端
+* **plugin: babel的插件，在6.x版本之后babel必需要配合插件来进行工作**
+* **preset: babel插件集合的预设，包含某一部分的插件plugin**
+* Plugin 会运行在 Preset 之前,Plugin 会从第一个开始顺序执行,ordering is first to last.Preset 的顺序则刚好相反\(从最后一个逆序执行\)。
 
-客户端再次请求的时候 服务端将token解密后 获取相应信息即可.
+### **同构**
 
-node.js中可以引入jsonwebtoken库进行对应操作
+**一套React代码,在服务器端执行一次\(获取数据,渲染页面\),在客户端也执行一次.\(执行js代码\)**
 
+![](.gitbook/assets/f-3zn-g-x-rx9bauusd-4a4.png)
 
+\*\*\*\*
 
-### 上传图片时用到的中间件
-
-#### 使用koa-body中间件获取上传的文件
+ 为了提供诸如图像、CSS 文件和 JavaScript 文件之类的静态文件，使用 Express 中的 `express.static` 内置中间件函数。
 
 ```text
-从ctx.request.files.file属性中取出文件
+express.static(root, [options])
 ```
 
-#### 使用koa-static中间件生成图片链接
-
-koa-static设置静态服务器的目录,目录下文件可以通过http请求访问
+例如，通过如下代码就可以将 `public` 目录下的图片、CSS 文件、JavaScript 文件对外开放访问了：
 
 ```text
-path.basename() 方法返回 path 的最后一部分
-ctx.origin:获取Url的来源:protocal和Host部分
-图片链接: ctx.origin + '图片目录' + path.basename(file.path)
+app.use(express.static('public'))
 ```
 
-### 关注和粉丝接口
-
-某个用户关注的人和其粉丝为多对多的关系
-
-给每个用户添加数据类型为数组的关注和粉丝字段 ?
-
-由实际情况来看,用户关注的人数据量不会很大,但是某些用户粉丝数可以是百万以上.每个用户的粉丝用数组存储显然占用太大空间.
-
-只需要存用户的关注者列表, 求\(userId='xxx'\)的粉丝时,在数据库中把关注列表包含userId='xxx'的用户筛选出来即可
-
-### 分页 和 模糊搜索
-
-```javascript
-分页
-从queryString中拿到 page,perPage
-需要的数据是从[perPage *(page-1)+1, perPage*page]
-利用skip跳过前缀,limit取指定数量即可.
-```
+现在，你就可以访问 `public` 目录中的所有文件了：
 
 ```text
-模糊搜索
-从queryString中拿到key,生成正则表达式
-在find时把正则表达式放入对应字段即可
+http://localhost:3000/images/kitten.jpg
+http://localhost:3000/css/style.css
+http://localhost:3000/js/app.js
+http://localhost:3000/images/bg.png
+http://localhost:3000/hello.html
 ```
 
+### **服务端渲染中的路由** 
 
+![](.gitbook/assets/usd-el5eoibj-i-zs2wg1eb.png)
 
-#### 坑点
+###  ****   ****
 
-用mongoose连接数据库的时候,记得监听一下error事件,不然密码输入错误都不会提示报错.
+### 引入react-router-dom
 
-
-
-
+* CSR:使用BrowserRouter
+* SSR:使用StaticRouter\(不知道浏览器当前的location\(路径\)\),\(只能用户req请求获取location\)
 
