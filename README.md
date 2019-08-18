@@ -73,3 +73,23 @@ http://localhost:3000/hello.html
 * CSR:使用BrowserRouter
 * SSR:使用StaticRouter\(不知道浏览器当前的location\(路径\)\),\(只能用户req请求获取location\)
 
+### 引入Redux
+
+1. 创建store,引入相关中间件,combine reducer
+2. 编写reducer \(初始化state,接收action\)
+3. 编写action \(请求数据,并做相关处理\)
+
+### 服务端渲染异步数据
+
+The gist of this approach relies on a static route config used to both render your routes and match against before rendering to determine data dependencies.
+
+* 根据请求的路由不同,求出要加载哪些组件,
+* 从react-router-config中引入matchRoutes用于多级路由和其对应组件的匹配
+* 给store提前注入相关组件需要的数据
+
+
+
+
+
+
+
