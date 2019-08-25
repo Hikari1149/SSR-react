@@ -1,20 +1,20 @@
 import React,{Component} from 'react'
-import Header from '../../components/Header'
 import {connect} from 'react-redux'
 import {getHomeList} from './store/actions'
 
 class Home extends Component {
     componentDidMount(){
-        this.props.getHomeList()
+        if(!this.props.list.length)
+            this.props.getHomeList()
     }
     render(){
+        const {list = []} = this.props
         return (
             <div>
-                <Header/>
                <h1>{this.props.name}</h1> 
                home
                {
-                   this.props.list.map((item,index)=>{
+                   list && list.map((item,index)=>{
                        return (
                            <div key={index}>
                                 {item.name}
@@ -27,8 +27,9 @@ class Home extends Component {
             )
     }
 }
-Home.loadData = ()=>{
+Home.loadData = (store)=>{
     //在服务端渲染这个组件前,把这个路由的数据提前加载好
+    return store.dispatch(getHomeList(true))
 }
 const stateToProps = (state)=>{
     return {

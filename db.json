@@ -1,6 +1,15 @@
 {
-    "newsList":[
-        {"id":1,"name":"news 001"},
-        {"id":2,"name":"news 002"}
-    ]
+  "newsList": [
+    {
+      "id": 1,
+      "name": "news 001"
+    },
+    {
+      "id": 2,
+      "name": "news 002"
+    }
+  ],
+  "isLogin": {
+    "isLogin": true
+  }
 }

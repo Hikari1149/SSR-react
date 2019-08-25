@@ -1,0 +1,5 @@
+{
+
+    "/api/newsList":"/newsList",
+    "/api/isLogin":"/isLogin"
+}
