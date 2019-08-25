@@ -83,9 +83,28 @@ http://localhost:3000/hello.html
 
 The gist of this approach relies on a static route config used to both render your routes and match against before rendering to determine data dependencies.
 
-* 根据请求的路由不同,求出要加载哪些组件,
-* 从react-router-config中引入matchRoutes用于多级路由和其对应组件的匹配
+* 根据请求的路由不同,求出要加载哪些组件
 * 给store提前注入相关组件需要的数据
+* 从react-router-config中引入matchRoutes用于多级路由和其对应组件的匹配,
+* 调用数据接口时,返回其promise. 使用Promise.all等待数据全部获取后,开始生成页面
+
+#### 数据注水和脱水
+
+* 注水 : 服务端渲染时 将数据写入全局对象window中
+* 脱水:  客户端渲染时,从全局对象中取出数据\(放入store）
+
+### Node作为中间层获取数据
+
+* 客户端渲染:直接请求远程api服务 获取数据
+* 服务端渲染:请求先到node server,  node server在去请求远程服务,获取数据,渲染页面后返回
+* 使用express-http-proxy 让客户端的请求也经过中间层
+* tip: 将client,server的axios的实例注入到redux-thunk的withExtraArgumen中
+
+
+
+
+
+
 
 
 
