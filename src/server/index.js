@@ -29,7 +29,18 @@ app.get('*',(req,res)=>{
       }
   })
   Promise.all(promises).then(()=>{
-    res.send(render(req,store,Routes))
+    const context ={}
+    const html = render(req,store,Routes,context)
+    //  重定向的时候 ,react-router-config 会自动往context里面注入数据
+    //  服务端渲染重定向的时候直接返回 301后的页面.
+    //  而客户端会先返回某个页面 在redirect到301后的页面
+    if(context.action === 'REPLACE'){
+      res.redirect(301,context.url)
+    }
+    if(context.notFound){
+      res.status(404)
+    }
+    res.send(html)
   })
 })
 

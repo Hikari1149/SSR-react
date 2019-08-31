@@ -3,7 +3,7 @@ import {Route} from 'react-router-dom'
 import App from './app'
 import Home from './containers/Home'
 import Login from './containers/Login'
-
+import NotFound from './containers/NotFound'
 export default [
     {
         path:'/',
@@ -23,9 +23,12 @@ export default [
                 component:Login,
                 exact:true,
                 key:'login'
+            },
+            {
+                component:NotFound 
             }
         ]
-        
     }
+
 
 ]
