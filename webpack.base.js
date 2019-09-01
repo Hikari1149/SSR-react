@@ -3,7 +3,8 @@ const chalk = require('chalk')
 const WebpackBar = require('webpackbar')
 module.exports={
     module:{
-        rules:[{
+        rules:[
+            {
             test:/\.js$/,
             loader:'babel-loader',
             exclude:/node_modules/,
@@ -18,7 +19,8 @@ module.exports={
                     }]
                 ]
             }
-        }]
+        },
+    ]
     },
     plugins:[
         new ProgressBarPlugin({

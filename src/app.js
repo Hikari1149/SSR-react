@@ -8,7 +8,7 @@ import {getHeaderInfo} from './components/Header/store/actions'
 const App = (props) =>{
     return (
         <div>
-            <Header/>
+            <Header staticContext={props.staticContext}/>
             {renderRoutes(props.route.routes)}
         </div>
     )

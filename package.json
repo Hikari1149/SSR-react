@@ -38,8 +38,12 @@
   },
   "devDependencies": {
     "chalk": "^2.4.2",
+    "css-loader": "^3.2.0",
+    "isomorphic-style-loader": "^5.1.0",
     "nodemon": "^1.19.1",
     "progress-bar-webpack-plugin": "^1.12.1",
+    "react-helmet": "^5.2.1",
+    "style-loader": "^1.0.0",
     "webpack-dashboard": "^3.0.7",
     "webpackbar": "^4.0.0"
   }

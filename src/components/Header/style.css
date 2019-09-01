@@ -1,0 +1,10 @@
+.test{
+    border:1px solid #ccc;
+    background: pink;
+}
+.item{
+    display: flex;
+    margin:10px 20px;
+    cursor: pointer;
+    text-decoration: none;
+}

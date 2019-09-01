@@ -1,0 +1,7 @@
+body{
+  
+}
+.item{
+    display: flex;
+    margin: 10px 20px;
+}

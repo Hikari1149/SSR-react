@@ -14,6 +14,21 @@ const serverConfg = {
             path:path.resolve(__dirname,'build')
         },
         externals:[nodeExternals()],
+        module:{
+            rules:[
+                {
+                    test:/\.css$/,
+                    use:['isomorphic-style-loader',{
+                        loader:'css-loader',
+                        options:{
+                          //  importLoader:1,
+                              modules:true,
+                           // localIdentName:'[name]_[local]_[hash:base64]'
+                        }
+                    }]
+                }
+            ]
+        }
 }
 
 module.exports = merge(config ,serverConfg)

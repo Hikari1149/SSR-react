@@ -11,6 +11,21 @@ const clientConfg = {
         filename:'index.js',
         path:path.resolve(__dirname,'public')
     },
+    module:{
+        rules:[
+            {
+                test:/\.css$/,
+                use:['style-loader',{
+                    loader:'css-loader',
+                    options:{
+                       // importLoader:1,
+                        modules:true,
+                       // localIdentName:'[name]_[local]_[hash:base64]'
+                    }
+                }]
+            }
+        ]
+    },
     plugins:[
         new ProgressBarPlugin({
             format: '  build [:bar] ' + chalk.green.bold(':percent') + ' (:elapsed seconds)',
@@ -18,5 +33,6 @@ const clientConfg = {
           }),
           new WebpackBar()
     ]
+    
 } 
 module.exports= merge(config,clientConfg)

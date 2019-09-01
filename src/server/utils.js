@@ -1,5 +1,6 @@
 import React from 'react'
 import {renderToString} from 'react-dom/server'
+import {Helmet} from 'react-helmet'
 import {StaticRouter,Route,matchPath} from 'react-router-dom'
 import {Provider} from 'react-redux'
 import {renderRoutes} from 'react-router-config'
@@ -14,11 +15,16 @@ export const render =(req,store,Routes,context)=>{
             </StaticRouter>
         </Provider>
     ))
-  
+    const helmet = Helmet.renderStatic()
+    const cssStr = context.css.length ?context.css.join('\n') :''
+   // console.log("css context ",cssStr)
     return (
         `<html>
         <head>
-            <title>ssr</title>
+            ${helmet.title.toString()}
+            ${helmet.meta.toString()}
+            ${helmet.link.toString()}
+            <style>${cssStr}</style>
         </head>
         <body>
             <div id='root'>${content}</div>
